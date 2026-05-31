@@ -55,9 +55,17 @@ const Instagram = () => {
         try {
           const liveData = await fetchInstagramStats(data[0].username, apiKey);
           setProfileData(liveData);
-        } catch {
+        } catch (err) {
+          console.error("Live fetch failed, using fallback:", err);
           // If live fetch fails, still show saved stats
-          setProfileData(null);
+          setProfileData({
+            name: data[0].username,
+            username: data[0].username,
+            followers: data[0].followers,
+            avg_likes: data[0].avg_likes,
+            avg_comments: data[0].avg_comments,
+            engagement_rate: data[0].engagement_rate
+          });
         }
       }
     } catch (err) {
