@@ -251,7 +251,7 @@ const YouTube = () => {
                       tickLine={false} 
                       axisLine={false} 
                       fontSize={12} 
-                      width={55}
+                      width={75}
                       tickFormatter={(value) => {
                         if (value >= 1000000) return (value / 1000000).toFixed(1) + 'M';
                         if (value >= 1000) return (value / 1000).toFixed(0) + 'K';

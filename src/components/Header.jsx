@@ -25,17 +25,8 @@ const Header = ({ title = "Dashboard" }) => {
       </div>
 
       <div className="header-right">
-        <div className="search-bar">
-          <Search size={20} className="search-icon" />
-          <input type="text" placeholder="Search analytics..." />
-        </div>
-        
         <button className="icon-btn" onClick={toggleTheme}>
           {theme === 'light' ? <Moon size={22} /> : <Sun size={22} />}
-        </button>
-        
-        <button className="icon-btn notification-btn">
-          <Bell size={22} />
         </button>
         
         <div className="profile-container">
