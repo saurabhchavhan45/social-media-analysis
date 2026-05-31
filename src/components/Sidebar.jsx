@@ -63,7 +63,7 @@ const Sidebar = () => {
         <div className="sidebar-overlay" onClick={() => setMobileOpen(false)} />
       )}
 
-      <aside className={`sidebar glass-panel ${mobileOpen ? 'sidebar-open' : ''}`}>
+      <aside className={`sidebar ${mobileOpen ? 'sidebar-open' : ''}`}>
         <div className="sidebar-header">
           <div className="logo-container">
             <TrendingUp className="logo-icon" size={32} />
