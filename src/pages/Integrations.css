@@ -143,3 +143,41 @@
   width: auto;
   margin-top: 8px;
 }
+
+/* ============================== */
+/* MOBILE RESPONSIVE - INTEGRATIONS */
+/* ============================== */
+@media (max-width: 768px) {
+  .integrations-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .integrations-header {
+    margin-bottom: 20px;
+  }
+
+  .integration-card {
+    padding: 24px 16px !important;
+  }
+
+  .integration-icon-box {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+  }
+
+  .integration-card:hover .integration-icon-box {
+    transform: none;
+  }
+
+  .integration-name {
+    font-size: 18px;
+  }
+
+  .integration-desc {
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+}

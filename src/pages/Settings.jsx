@@ -50,7 +50,7 @@ const Settings = () => {
         <p style={{ color: 'var(--text-secondary)' }}>Manage your profile, security, and API configurations.</p>
       </div>
 
-      <div className="settings-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+      <div className="settings-grid">
         
         {/* Profile Settings */}
         <div className="premium-card">

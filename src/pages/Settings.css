@@ -58,8 +58,17 @@
   color: #EE5D50;
 }
 
+/* ============================== */
+/* MOBILE RESPONSIVE - SETTINGS  */
+/* ============================== */
 @media (max-width: 1024px) {
   .settings-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .settings-grid {
+    gap: 16px;
   }
 }

@@ -1,6 +1,6 @@
-import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Settings, LogOut, TrendingUp, BarChart2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { LayoutDashboard, Settings, LogOut, TrendingUp, BarChart2, Menu, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './Sidebar.css';
 
@@ -23,7 +23,24 @@ const YoutubeIcon = ({ size = 24, color = 'currentColor' }) => (
 
 const Sidebar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { signOut } = useAuth();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Close sidebar on route change (mobile)
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
+
+  // Prevent body scroll when mobile sidebar is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
 
   const handleLogout = async () => {
     await signOut();
@@ -31,48 +48,71 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="sidebar glass-panel">
-      <div className="sidebar-header">
-        <div className="logo-container">
-          <TrendingUp className="logo-icon" size={32} />
-          <h2 className="logo-text">UniSocial</h2>
-        </div>
-      </div>
-      
-      <nav className="sidebar-nav">
-        <NavLink to="/" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
-          <LayoutDashboard size={22} />
-          <span>Dashboard</span>
-        </NavLink>
-        <NavLink to="/youtube" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
-          <YoutubeIcon size={22} />
-          <span>YouTube</span>
-        </NavLink>
-        <NavLink to="/instagram" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
-          <InstagramIcon size={22} />
-          <span>Instagram</span>
-        </NavLink>
-        <NavLink to="/analytics" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
-          <BarChart2 size={22} />
-          <span>Analytics</span>
-        </NavLink>
-        <NavLink to="/integrations" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
-          <TrendingUp size={22} />
-          <span>Integrations</span>
-        </NavLink>
-        <NavLink to="/settings" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
-          <Settings size={22} />
-          <span>Settings</span>
-        </NavLink>
-      </nav>
+    <>
+      {/* Mobile hamburger button */}
+      <button
+        className="mobile-menu-btn"
+        onClick={() => setMobileOpen(true)}
+        aria-label="Open menu"
+      >
+        <Menu size={26} />
+      </button>
 
-      <div className="sidebar-footer">
-        <button className="nav-item logout-btn" onClick={handleLogout}>
-          <LogOut size={22} />
-          <span>Logout</span>
-        </button>
-      </div>
-    </aside>
+      {/* Overlay */}
+      {mobileOpen && (
+        <div className="sidebar-overlay" onClick={() => setMobileOpen(false)} />
+      )}
+
+      <aside className={`sidebar glass-panel ${mobileOpen ? 'sidebar-open' : ''}`}>
+        <div className="sidebar-header">
+          <div className="logo-container">
+            <TrendingUp className="logo-icon" size={32} />
+            <h2 className="logo-text">UniSocial</h2>
+          </div>
+          <button
+            className="mobile-close-btn"
+            onClick={() => setMobileOpen(false)}
+            aria-label="Close menu"
+          >
+            <X size={24} />
+          </button>
+        </div>
+        
+        <nav className="sidebar-nav">
+          <NavLink to="/" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
+            <LayoutDashboard size={22} />
+            <span>Dashboard</span>
+          </NavLink>
+          <NavLink to="/youtube" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
+            <YoutubeIcon size={22} />
+            <span>YouTube</span>
+          </NavLink>
+          <NavLink to="/instagram" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
+            <InstagramIcon size={22} />
+            <span>Instagram</span>
+          </NavLink>
+          <NavLink to="/analytics" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
+            <BarChart2 size={22} />
+            <span>Analytics</span>
+          </NavLink>
+          <NavLink to="/integrations" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
+            <TrendingUp size={22} />
+            <span>Integrations</span>
+          </NavLink>
+          <NavLink to="/settings" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
+            <Settings size={22} />
+            <span>Settings</span>
+          </NavLink>
+        </nav>
+
+        <div className="sidebar-footer">
+          <button className="nav-item logout-btn" onClick={handleLogout}>
+            <LogOut size={22} />
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+    </>
   );
 };
 

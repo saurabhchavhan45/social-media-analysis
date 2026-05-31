@@ -166,8 +166,42 @@
   text-decoration: underline;
 }
 
+/* ============================== */
+/* MOBILE RESPONSIVE - LOGIN     */
+/* ============================== */
 @media (max-width: 900px) {
   .auth-left {
     display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-right {
+    padding: 20px;
+    align-items: flex-start;
+    padding-top: 60px;
+  }
+
+  .auth-card {
+    padding: 24px !important;
+  }
+
+  .auth-title {
+    font-size: 24px;
+  }
+
+  .auth-subtitle {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .auth-form input {
+    padding: 12px 12px 12px 36px;
+    font-size: 14px;
+  }
+
+  .auth-submit {
+    padding: 14px;
+    font-size: 15px;
   }
 }

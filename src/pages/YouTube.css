@@ -7,6 +7,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .error-banner {
@@ -67,6 +69,7 @@
   background-color: var(--bg-primary);
   color: var(--text-primary);
   outline: none;
+  min-width: 0;
 }
 
 .connect-form input:focus {
@@ -114,6 +117,7 @@
   object-fit: cover;
   border-radius: var(--radius-sm);
   background-color: var(--bg-secondary);
+  flex-shrink: 0;
 }
 
 .video-details {
@@ -121,11 +125,15 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 0;
 }
 
 .video-details h4 {
   margin-bottom: 12px;
   font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .video-stats {
@@ -134,12 +142,14 @@
   color: var(--text-secondary);
   font-size: 14px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .video-stats span {
   display: flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
 }
 
 .video-date {
@@ -152,4 +162,79 @@
 
 @keyframes spin {
   100% { transform: rotate(360deg); }
+}
+
+/* ============================== */
+/* MOBILE RESPONSIVE - YOUTUBE   */
+/* ============================== */
+@media (max-width: 768px) {
+  .page-header {
+    margin-bottom: 16px;
+  }
+
+  .connect-card {
+    padding: 32px 20px !important;
+    margin: 20px auto;
+  }
+
+  .connect-card h3 {
+    font-size: 20px;
+  }
+
+  .connect-form {
+    flex-direction: column;
+    max-width: 100%;
+  }
+
+  .video-item {
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .video-item:hover {
+    transform: none;
+  }
+
+  .video-thumb {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+
+  .video-details h4 {
+    font-size: 14px;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
+
+  .video-stats {
+    gap: 12px;
+    font-size: 12px;
+  }
+
+  .video-date {
+    margin-left: 0;
+  }
+
+  .videos-card {
+    margin-top: 20px;
+  }
+
+  .videos-card h3 {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .connect-card {
+    padding: 24px 16px !important;
+  }
+
+  .connect-icon {
+    width: 60px;
+    height: 60px;
+  }
 }

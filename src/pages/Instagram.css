@@ -345,6 +345,7 @@
   border-top: 1px solid var(--border-color);
   font-size: 13px;
   font-weight: 500;
+  flex-wrap: wrap;
 }
 
 .ig-post-stats span {
@@ -374,7 +375,9 @@
   margin-bottom: 0;
 }
 
-/* === Responsive === */
+/* ============================== */
+/* MOBILE RESPONSIVE - INSTAGRAM */
+/* ============================== */
 @media (max-width: 1200px) {
   .ig-metrics {
     grid-template-columns: repeat(2, 1fr);
@@ -383,7 +386,8 @@
 
 @media (max-width: 768px) {
   .ig-metrics {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
 
   .ig-charts-grid {
@@ -395,11 +399,72 @@
     text-align: center;
   }
 
+  .ig-name-row {
+    justify-content: center;
+  }
+
   .ig-tags {
     justify-content: center;
   }
 
   .ig-posts-list {
     grid-template-columns: 1fr;
+  }
+
+  .ig-avatar {
+    width: 64px;
+    height: 64px;
+  }
+
+  .ig-name-row h3 {
+    font-size: 18px;
+  }
+
+  .ig-handle {
+    font-size: 13px;
+  }
+
+  .ig-bio {
+    font-size: 13px;
+  }
+
+  .ig-gender-label,
+  .ig-quality-label {
+    min-width: 80px;
+    font-size: 12px;
+  }
+
+  .ig-country-name {
+    min-width: 70px;
+    font-size: 12px;
+  }
+
+  .ig-bar-value {
+    font-size: 12px;
+    min-width: 38px;
+  }
+
+  .ig-post-item:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .ig-metrics {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .ig-chart-card {
+    min-height: 220px;
+  }
+
+  .ig-post-stats {
+    gap: 10px;
+    font-size: 12px;
+  }
+
+  .ig-post-link {
+    margin-left: 0;
   }
 }

@@ -165,3 +165,43 @@ button {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* ============================== */
+/* MOBILE RESPONSIVE - GLOBAL    */
+/* ============================== */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: 72px 16px 24px 16px; /* top padding for hamburger button */
+    gap: 20px;
+  }
+
+  .premium-card {
+    padding: 16px;
+    border-radius: var(--radius-md);
+  }
+
+  .premium-card:hover {
+    transform: none; /* disable hover lift on mobile for better UX */
+  }
+
+  .btn-primary {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  .masonry-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 68px 12px 20px 12px;
+    gap: 16px;
+  }
+
+  .premium-card {
+    padding: 14px;
+  }
+}

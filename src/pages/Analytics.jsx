@@ -119,7 +119,7 @@ const Analytics = () => {
         </div>
       </div>
 
-      <div className="analytics-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+      <div className="analytics-grid">
         
         {/* Audience Comparison */}
         <div className="premium-card">
