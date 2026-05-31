@@ -242,7 +242,7 @@ const YouTube = () => {
                       shortTitle: v.title.length > 20 ? v.title.substring(0, 20) + '...' : v.title,
                       engRate: views > 0 ? ((likes + comments) / views * 100).toFixed(2) : 0
                     };
-                  })} margin={{ top: 20, right: 0, bottom: 20, left: 0 }}>
+                  })} margin={{ top: 20, right: 0, bottom: 20, left: 10 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-color)" />
                     <XAxis dataKey="shortTitle" stroke="var(--text-secondary)" tickLine={false} axisLine={false} fontSize={12} />
                     <YAxis 

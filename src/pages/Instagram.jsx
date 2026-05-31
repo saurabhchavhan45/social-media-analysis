@@ -413,7 +413,7 @@ const Instagram = () => {
                       followers: h.followers, 
                       engagement: h.engagement_rate 
                     }))}
-                    margin={{ top: 5, right: 0, left: 0, bottom: 5 }}>
+                    margin={{ top: 5, right: 0, left: 15, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-color)" />
                     <XAxis dataKey="name" stroke="var(--text-secondary)" tickLine={false} axisLine={false} fontSize={12} />
                     <YAxis 
