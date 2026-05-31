@@ -245,7 +245,19 @@ const YouTube = () => {
                   })} margin={{ top: 20, right: 0, bottom: 20, left: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-color)" />
                     <XAxis dataKey="shortTitle" stroke="var(--text-secondary)" tickLine={false} axisLine={false} fontSize={12} />
-                    <YAxis yAxisId="left" stroke="var(--text-secondary)" tickLine={false} axisLine={false} fontSize={12} width={50} />
+                    <YAxis 
+                      yAxisId="left" 
+                      stroke="var(--text-secondary)" 
+                      tickLine={false} 
+                      axisLine={false} 
+                      fontSize={12} 
+                      width={55}
+                      tickFormatter={(value) => {
+                        if (value >= 1000000) return (value / 1000000).toFixed(1) + 'M';
+                        if (value >= 1000) return (value / 1000).toFixed(0) + 'K';
+                        return value;
+                      }}
+                    />
                     <YAxis yAxisId="right" orientation="right" stroke="var(--text-secondary)" tickLine={false} axisLine={false} fontSize={12} width={40} />
                     <Tooltip contentStyle={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: '12px' }} />
                     <Legend wrapperStyle={{ fontSize: '13px' }} />

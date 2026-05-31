@@ -130,7 +130,17 @@ const Analytics = () => {
                 <BarChart data={data.comparison} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-color)" />
                   <XAxis dataKey="platform" stroke="var(--text-secondary)" tickLine={false} axisLine={false} />
-                  <YAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} />
+                  <YAxis 
+                    stroke="var(--text-secondary)" 
+                    tickLine={false} 
+                    axisLine={false}
+                    width={55}
+                    tickFormatter={(value) => {
+                      if (value >= 1000000) return (value / 1000000).toFixed(1) + 'M';
+                      if (value >= 1000) return (value / 1000).toFixed(0) + 'K';
+                      return value;
+                    }}
+                  />
                   <Tooltip contentStyle={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: '12px' }} />
                   <Bar dataKey="audience" name="Total Audience" radius={[6, 6, 0, 0]} />
                 </BarChart>
@@ -152,7 +162,17 @@ const Analytics = () => {
                 <BarChart data={data.comparison} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-color)" />
                   <XAxis dataKey="platform" stroke="var(--text-secondary)" tickLine={false} axisLine={false} />
-                  <YAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} />
+                  <YAxis 
+                    stroke="var(--text-secondary)" 
+                    tickLine={false} 
+                    axisLine={false}
+                    width={55}
+                    tickFormatter={(value) => {
+                      if (value >= 1000000) return (value / 1000000).toFixed(1) + 'M';
+                      if (value >= 1000) return (value / 1000).toFixed(0) + 'K';
+                      return value;
+                    }}
+                  />
                   <Tooltip contentStyle={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: '12px' }} />
                   <Bar dataKey="engagement" name="Engagement (%)" radius={[6, 6, 0, 0]} />
                 </BarChart>

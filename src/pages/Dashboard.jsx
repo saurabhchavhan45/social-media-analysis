@@ -233,7 +233,17 @@ const Dashboard = () => {
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-color)" />
                     <XAxis dataKey="name" stroke="var(--text-secondary)" tickLine={false} axisLine={false} />
-                    <YAxis stroke="var(--text-secondary)" tickLine={false} axisLine={false} />
+                    <YAxis 
+                      stroke="var(--text-secondary)" 
+                      tickLine={false} 
+                      axisLine={false}
+                      width={55}
+                      tickFormatter={(value) => {
+                        if (value >= 1000000) return (value / 1000000).toFixed(1) + 'M';
+                        if (value >= 1000) return (value / 1000).toFixed(0) + 'K';
+                        return value;
+                      }}
+                    />
                     <Tooltip contentStyle={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: '12px' }} />
                     <Legend />
                     <Area type="monotone" dataKey="instagram" name="Instagram" stroke="#E1306C" fillOpacity={1} fill="url(#colorInsta)" strokeWidth={3} />

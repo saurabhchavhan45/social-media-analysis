@@ -416,7 +416,19 @@ const Instagram = () => {
                     margin={{ top: 5, right: 0, left: 0, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-color)" />
                     <XAxis dataKey="name" stroke="var(--text-secondary)" tickLine={false} axisLine={false} fontSize={12} />
-                    <YAxis yAxisId="left" stroke="var(--text-secondary)" tickLine={false} axisLine={false} fontSize={12} width={60} />
+                    <YAxis 
+                      yAxisId="left" 
+                      stroke="var(--text-secondary)" 
+                      tickLine={false} 
+                      axisLine={false} 
+                      fontSize={12} 
+                      width={55}
+                      tickFormatter={(value) => {
+                        if (value >= 1000000) return (value / 1000000).toFixed(1) + 'M';
+                        if (value >= 1000) return (value / 1000).toFixed(0) + 'K';
+                        return value;
+                      }}
+                    />
                     <YAxis yAxisId="right" orientation="right" stroke="var(--text-secondary)" tickLine={false} axisLine={false} fontSize={12} width={35} />
                     <Tooltip contentStyle={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: '12px' }} />
                     <Legend wrapperStyle={{ fontSize: '13px' }} />
