@@ -120,29 +120,146 @@ const Dashboard = () => {
   };
 
   const handleDownloadReport = async () => {
-    const element = document.getElementById('dashboard-content');
-    
-    // Temporarily fix width to ensure CSS grids don't collapse during export
-    const originalWidth = element.style.width;
-    element.style.width = '1200px';
-    
+    if (!data) return;
+
+    const reportDate = new Date().toLocaleDateString('en-US', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    // Build a dedicated report HTML — not a screenshot
+    const reportHTML = `
+      <div style="font-family: 'Segoe UI', Arial, Helvetica, sans-serif; width: 100%; padding: 40px; background: #FFFFFF; color: #1B2559;">
+        
+        <!-- Report Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #4318FF; padding-bottom: 20px; margin-bottom: 32px;">
+          <div>
+            <h1 style="font-size: 28px; font-weight: 700; color: #4318FF; margin: 0 0 4px 0;">UniSocial Analytics Report</h1>
+            <p style="font-size: 14px; color: #A3AED0; margin: 0;">Generated on ${reportDate}</p>
+          </div>
+          <div style="text-align: right;">
+            <p style="font-size: 13px; color: #A3AED0; margin: 0;">Prepared for</p>
+            <p style="font-size: 16px; font-weight: 600; color: #1B2559; margin: 4px 0 0 0;">${user?.user_metadata?.full_name || user?.email || 'Creator'}</p>
+          </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <h2 style="font-size: 18px; font-weight: 700; color: #1B2559; margin: 0 0 16px 0;">Key Metrics</h2>
+        <div style="display: flex; gap: 16px; margin-bottom: 32px;">
+          <div style="flex: 1; background: #F4F7FE; border-radius: 12px; padding: 20px; border-left: 4px solid #4318FF;">
+            <p style="font-size: 12px; color: #A3AED0; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 0.5px;">Total Audience</p>
+            <p style="font-size: 28px; font-weight: 700; color: #1B2559; margin: 0;">${data.totalFollowers.toLocaleString()}</p>
+          </div>
+          <div style="flex: 1; background: #FFF5F7; border-radius: 12px; padding: 20px; border-left: 4px solid #E1306C;">
+            <p style="font-size: 12px; color: #A3AED0; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 0.5px;">Avg Likes (IG)</p>
+            <p style="font-size: 28px; font-weight: 700; color: #1B2559; margin: 0;">${data.totalLikes.toLocaleString()}</p>
+          </div>
+          <div style="flex: 1; background: #F0F4FF; border-radius: 12px; padding: 20px; border-left: 4px solid #1877F2;">
+            <p style="font-size: 12px; color: #A3AED0; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 0.5px;">Avg Comments (IG)</p>
+            <p style="font-size: 28px; font-weight: 700; color: #1B2559; margin: 0;">${data.totalComments.toLocaleString()}</p>
+          </div>
+          <div style="flex: 1; background: #FFF0F0; border-radius: 12px; padding: 20px; border-left: 4px solid #FF0000;">
+            <p style="font-size: 12px; color: #A3AED0; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 0.5px;">Engagement (IG)</p>
+            <p style="font-size: 28px; font-weight: 700; color: #1B2559; margin: 0;">${data.engagementRate}%</p>
+          </div>
+        </div>
+
+        <!-- Platform Comparison -->
+        <h2 style="font-size: 18px; font-weight: 700; color: #1B2559; margin: 0 0 16px 0;">Platform Comparison</h2>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 32px; background: #FFFFFF;">
+          <thead>
+            <tr style="background: #F4F7FE;">
+              <th style="text-align: left; padding: 12px 16px; font-size: 13px; color: #A3AED0; font-weight: 600; border-bottom: 2px solid #E2E8F0;">Platform</th>
+              <th style="text-align: right; padding: 12px 16px; font-size: 13px; color: #A3AED0; font-weight: 600; border-bottom: 2px solid #E2E8F0;">Followers</th>
+              <th style="text-align: right; padding: 12px 16px; font-size: 13px; color: #A3AED0; font-weight: 600; border-bottom: 2px solid #E2E8F0;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.platforms.map(p => `
+              <tr>
+                <td style="padding: 14px 16px; font-size: 15px; font-weight: 600; color: #1B2559; border-bottom: 1px solid #E2E8F0;">
+                  <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: ${p.color}; margin-right: 10px; vertical-align: middle;"></span>
+                  ${p.name}
+                </td>
+                <td style="padding: 14px 16px; font-size: 15px; font-weight: 700; color: #1B2559; text-align: right; border-bottom: 1px solid #E2E8F0;">${p.empty ? '—' : p.followers.toLocaleString()}</td>
+                <td style="padding: 14px 16px; font-size: 13px; text-align: right; border-bottom: 1px solid #E2E8F0; color: ${p.empty ? '#EE5D50' : '#05CD99'}; font-weight: 600;">${p.empty ? 'Not Connected' : 'Connected'}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+
+        ${data.recentPosts.length > 0 ? `
+        <!-- Recent Videos -->
+        <h2 style="font-size: 18px; font-weight: 700; color: #1B2559; margin: 0 0 16px 0;">Recent YouTube Videos</h2>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 32px; background: #FFFFFF;">
+          <thead>
+            <tr style="background: #F4F7FE;">
+              <th style="text-align: left; padding: 12px 16px; font-size: 13px; color: #A3AED0; font-weight: 600; border-bottom: 2px solid #E2E8F0;">Video Title</th>
+              <th style="text-align: right; padding: 12px 16px; font-size: 13px; color: #A3AED0; font-weight: 600; border-bottom: 2px solid #E2E8F0;">Views</th>
+              <th style="text-align: right; padding: 12px 16px; font-size: 13px; color: #A3AED0; font-weight: 600; border-bottom: 2px solid #E2E8F0;">Likes</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.recentPosts.map(post => `
+              <tr>
+                <td style="padding: 14px 16px; font-size: 14px; font-weight: 500; color: #1B2559; border-bottom: 1px solid #E2E8F0; max-width: 400px;">${post.content}</td>
+                <td style="padding: 14px 16px; font-size: 14px; font-weight: 600; color: #1B2559; text-align: right; border-bottom: 1px solid #E2E8F0;">${(post.views || 0).toLocaleString()}</td>
+                <td style="padding: 14px 16px; font-size: 14px; font-weight: 600; color: #1B2559; text-align: right; border-bottom: 1px solid #E2E8F0;">${(post.likes || 0).toLocaleString()}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        ` : ''}
+
+        ${data.growthData && data.growthData.length > 1 ? `
+        <!-- Growth Data Table -->
+        <h2 style="font-size: 18px; font-weight: 700; color: #1B2559; margin: 0 0 16px 0;">Audience Growth History</h2>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 32px; background: #FFFFFF;">
+          <thead>
+            <tr style="background: #F4F7FE;">
+              <th style="text-align: left; padding: 12px 16px; font-size: 13px; color: #A3AED0; font-weight: 600; border-bottom: 2px solid #E2E8F0;">Date</th>
+              <th style="text-align: right; padding: 12px 16px; font-size: 13px; color: #A3AED0; font-weight: 600; border-bottom: 2px solid #E2E8F0;">Instagram</th>
+              <th style="text-align: right; padding: 12px 16px; font-size: 13px; color: #A3AED0; font-weight: 600; border-bottom: 2px solid #E2E8F0;">YouTube</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.growthData.map(row => `
+              <tr>
+                <td style="padding: 14px 16px; font-size: 14px; font-weight: 500; color: #1B2559; border-bottom: 1px solid #E2E8F0;">${row.name}</td>
+                <td style="padding: 14px 16px; font-size: 14px; font-weight: 600; color: #E1306C; text-align: right; border-bottom: 1px solid #E2E8F0;">${(row.instagram || 0).toLocaleString()}</td>
+                <td style="padding: 14px 16px; font-size: 14px; font-weight: 600; color: #FF0000; text-align: right; border-bottom: 1px solid #E2E8F0;">${(row.youtube || 0).toLocaleString()}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        ` : ''}
+
+        <!-- Footer -->
+        <div style="border-top: 1px solid #E2E8F0; padding-top: 16px; display: flex; justify-content: space-between; align-items: center;">
+          <p style="font-size: 12px; color: #A3AED0; margin: 0;">© ${new Date().getFullYear()} UniSocial — Social Media Analytics</p>
+          <p style="font-size: 12px; color: #A3AED0; margin: 0;">Page 1 of 1</p>
+        </div>
+      </div>
+    `;
+
     const opt = {
-      margin:       0.3,
+      margin:       0.4,
       filename:     'UniSocial-Analytics-Report.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
+      image:        { type: 'png', quality: 1.0 },
       html2canvas:  { 
-        scale: 2, 
-        useCORS: true, 
-        backgroundColor: '#F4F7FE',
-        windowWidth: 1200
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#FFFFFF',
+        windowWidth: 1100,
+        logging: false
       },
-      jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
     };
-    
-    await html2pdf().set(opt).from(element).save();
-    
-    // Restore original width
-    element.style.width = originalWidth;
+
+    try {
+      await html2pdf().set(opt).from(reportHTML, 'string').save();
+    } catch (err) {
+      console.error('PDF export failed:', err);
+    }
   };
 
   if (error) return <div className="loading">Failed to load data</div>;
