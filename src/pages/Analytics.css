@@ -1,0 +1,6 @@
+/* Analytics CSS */
+@media (max-width: 1024px) {
+  .analytics-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
