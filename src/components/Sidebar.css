@@ -1,12 +1,15 @@
 .sidebar {
   width: 280px;
-  height: 100vh;
+  height: 100vh; /* fallback for older browsers */
+  height: 100dvh; /* dynamic viewport height - fixes mobile browser toolbar issue */
   position: fixed;
   left: 0;
   top: 0;
   display: flex;
   flex-direction: column;
   padding: 24px 16px;
+  /* iOS safe area support */
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
   z-index: 100;
   border-radius: 0;
   border-top: none;
@@ -14,6 +17,8 @@
   border-bottom: none;
   background-color: var(--bg-secondary);
   border-right: 1px solid var(--border-color);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .sidebar-header {
@@ -74,6 +79,13 @@
 
 .sidebar-footer {
   margin-top: auto;
+  flex-shrink: 0;
+  padding-top: 12px;
+  /* Ensure logout button is never clipped on mobile */
+  position: sticky;
+  bottom: 0;
+  background-color: var(--bg-secondary);
+  z-index: 1;
 }
 
 .logout-btn {
